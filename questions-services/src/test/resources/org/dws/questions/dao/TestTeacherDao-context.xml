@@ -24,8 +24,7 @@
 	</bean>
 
 	<jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS">
-		<!-- jdbc:script location="classpath:/src/test/resources/org/dws/questions/dao/questions-test-schema-postgresql.sql" / -->
-		<jdbc:script  location="file:/Users/dwsmithson/Development/projects/sts_test/questions-services/src/test/resources/org/dws/questions/dao/questions-test-schema-postgresql.sql" />
+		<jdbc:script location="classpath:org/dws/questions/dao/questions-test-schema-postgresql.sql" />
 	</jdbc:initialize-database>
 	
 	

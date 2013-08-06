@@ -7,6 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.dws.questions.domain.Teacher;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -18,8 +19,8 @@ import org.springframework.stereotype.Repository;
 public class PostgreSqlTeacherDao extends AbstractPostgreSqlDao<Teacher> implements TeacherDao {
 	
 	private static final String ID = "id";
-	private static final String FIRST_NAME = "first_name";
-	private static final String LAST_NAME =  "last_name";
+	private static final String FIRST_NAME = "firstName";
+	private static final String LAST_NAME =  "lastName";
 	private static final String EMAIL = "email";
 
 	private static final String CREATE_SQL = 
@@ -107,11 +108,12 @@ public class PostgreSqlTeacherDao extends AbstractPostgreSqlDao<Teacher> impleme
 
 	@Override
 	public boolean exists(Serializable id) {
-		Teacher teacher = get(id);
-		if (teacher != null) {
-			return true;
+		try {
+			get(id);
+		} catch (EmptyResultDataAccessException e) {
+			return false;
 		}
-		return false;
+		return true;
 	}
 	
 	
